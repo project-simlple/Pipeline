@@ -1,6 +1,7 @@
 node('dev') {
+  def wsDirPath = this.env.getProperty('WORKSPACE')
   try {
-    println this.env
+    println wsDirPath
     
   } catch(Exception e) {
     
