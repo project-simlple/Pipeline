@@ -1,0 +1,9 @@
+node('dev'){
+    
+    def maven_home = tool(name:"Maven")
+    sh "${maven_home}/bin/mvn -version"
+    
+    checkout scmGit(branches: [[name: 'branch1']],
+                    userRemoteConfigs: [[credentialsId:  'a27afd60-ba78-46fe-8603-8566ba9151e6',url: 'git@github.com:project-simlple/Demo.git']])
+    sh "cat file1.txt"
+}
