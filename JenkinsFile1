@@ -1,0 +1,11 @@
+node('dev') {
+  try {
+    println this.env
+    
+  } catch(Exception e) {
+    
+  } finally {
+    
+  }
+  
+}
