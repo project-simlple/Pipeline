@@ -1,5 +1,9 @@
 node('dev') {
+  // Working enviornment specific variables
   def wsDirPath = this.env.getProperty('WORKSPACE')
+  // Tools specific variables
+  def maven_home = tool(name:"Maven")
+  
   try {
     println wsDirPath
     
