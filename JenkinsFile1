@@ -5,7 +5,15 @@ node('dev') {
   def maven_home = tool(name:"Maven")
   
   try {
-    println wsDirPath
+    stage() {
+    }
+    stage("cleaning workspace") {
+      cleanWs(cleanWhenSuccess: true,
+              cleanWhenAborted: false,
+              cleanWhenFailure: false,
+              cleanWhenNotBuilt: false
+              )  
+    }
     
   } catch(Exception e) {
     
