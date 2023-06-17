@@ -31,10 +31,9 @@ node('dev') {
       sh "${maven_home}/bin/mvn package"
     }
     stage("copy the .war file to tomcat webapps directory for deployment and clean the build artificats from workspace") {
-      sh "cd target"
       echo "listing target directory"
-      sh "ls -alh"
-      sh "ls | grep .war" 
+      sh "ls -alh ${wsDirPath}/target"
+      sh "ls ${wsDirPath}/target|grep .war" 
     }
     
     cleanWs(cleanWhenSuccess: true,
