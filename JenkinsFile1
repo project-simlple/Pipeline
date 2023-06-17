@@ -3,15 +3,13 @@ node('dev') {
   def wsDirPath = this.env.getProperty('WORKSPACE')
   // Tools specific variables
   def maven_home = tool(name:"Maven")
-  // Just for practice purpose
-  def current_build_number = this.currentBuild.getProperty('number')
   
   try {
     stage("dummy: gathering info") {
       echo "User details: "
       sh "id"
       echo "Build number: "
-      println current_build_number
+      echo "${this.currentBuild.getNumber()}"
       echo "Name of the node: "
       echo "${this.env.getProperty('NODE_NAME')}"
       echo "Workspace directory path :"
