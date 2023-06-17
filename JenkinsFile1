@@ -32,8 +32,9 @@ node('dev') {
     }
     stage("copy the .war file to tomcat webapps directory for deployment and clean the build artificats from workspace") {
       sh "cd target"
-      def artifactFileName = sh "ls | grep .war"
-      echo "${artifactFileName}" 
+      echo "listing target directory"
+      sh "ls -alh"
+      sh "ls | grep .war" 
     }
     
     cleanWs(cleanWhenSuccess: true,
