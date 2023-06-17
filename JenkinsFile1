@@ -9,7 +9,7 @@ node('dev') {
       echo "User details: "
       sh "id"
       echo "Build number: "
-      sh ${this.currentBuild.number}
+      echo ${this.currentBuild.number}
       echo "Name of the node: "
       echo ${this.env.getProperty('NODE_NAME')}
       echo "Workspace directory path :"
