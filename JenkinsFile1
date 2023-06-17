@@ -33,16 +33,14 @@ node('dev') {
     stage("copy the .war file to tomcat webapps directory for deployment and clean the build artificats from workspace") {
       sh "cd target"
       def artifactFileName = sh "ls | grep .war"
-      echo "${artifactFileName}"
-      
+      echo "${artifactFileName}" 
     }
     
-      cleanWs(cleanWhenSuccess: true,
-              cleanWhenAborted: false,
-              cleanWhenFailure: false,
-              cleanWhenNotBuilt: false
-              )  
-    }
+    cleanWs(cleanWhenSuccess: true,
+            cleanWhenAborted: false,
+            cleanWhenFailure: false,
+            cleanWhenNotBuilt: false
+            )  
     
   } catch(Exception e) {
     
