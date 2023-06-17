@@ -5,7 +5,15 @@ node('dev') {
   def maven_home = tool(name:"Maven")
   
   try {
-    stage() {
+    stage("dummy: gathering info") {
+      echo "Workspace directory path :"
+      echo "${wsDirPath}"
+      echo "Maven version : "
+      sh "${maven_home}/bin/mvn -version"
+      echo "Java version : "
+      sh "java -version"
+    }
+    stage("building the application") {
     }
     stage("cleaning workspace") {
       cleanWs(cleanWhenSuccess: true,
