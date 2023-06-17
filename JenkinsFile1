@@ -6,6 +6,8 @@ node('dev') {
   
   try {
     stage("dummy: gathering info") {
+      echo "user details: "
+      sh "who am i"
       echo "Workspace directory path :"
       echo "${wsDirPath}"
       echo "Maven version : "
