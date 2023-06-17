@@ -19,12 +19,16 @@ node('dev') {
       echo "Java version: "
       sh "java -version"
     }
-    stage("building the application") {
+    stage("fetching the source code") {
       echo "cloning the source code from github"
       // checkout scmGit(branches: [[name: 'branch1']], userRemoteConfigs: [[credentialsId: 'a27afd60-ba78-46fe-8603-8566ba9151e6', url: 'git@github.com:project-simlple/Demo.git']])
       checkout scmGit(branches: [[name: 'master']], userRemoteConfigs: [[url: 'https://github.com/project-simlple/java-code1.git']])
       echo "listing workspace directory"
       sh "ls -alh ${wsDirPath}"
+    }
+    stage("build the .war file using maven") {
+      sh "cd ${wsDirPath}/java-code1"
+      sh "${maven_home}/bin/mvn package"
     }
     stage("cleaning workspace") {
       cleanWs(cleanWhenSuccess: true,
