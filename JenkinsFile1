@@ -52,8 +52,12 @@ node('dev') {
           def OldArtifactFileName = NewArtifactFileNameMinusExt+".war"
           // rename 
           sh "mv ${wsDirPath}/target/${artifactFileName} ${wsDirPath}/target/${NewArtifactFileName}"
+          echo "listing target directory"
+          sh "ls -alh ${wsDirPath}/target"
           // copy the artifacts to backup directory
           sh "cp ${wsDirPath}/target/${NewArtifactFileName} ${artifact_backup_dir}"
+          echo "listing jenkins backup directory"
+          sh "ls -alh ${artifact_backup_dir}"
           // cleaning the older artifacts from webapps directory
           //if (current_build_number == 0) {
             //sh "rm -r ${tomcat_home}/webapps/${artifactFileName} ${tomcat_home}/webapps/${artifactFileNameMinusExt}"
@@ -63,6 +67,8 @@ node('dev') {
           //}
           // copy the new artifacts to webapps directory
            sh "cp ${wsDirPath}/target/NewArtifactFileName ${tomcat_home}/webapps"
+           echo "listing tomcat webapps directory"
+           sh "ls -alh ${tomcat_home}/webapps"
     }
     stage("cleaning the workspace") {
       cleanWs(cleanWhenSuccess: true,
