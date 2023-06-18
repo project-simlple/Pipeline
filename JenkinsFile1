@@ -59,12 +59,12 @@ node('dev') {
           echo "listing jenkins backup directory"
           sh "ls -alh ${artifact_backup_dir}"
           // cleaning the older artifacts from webapps directory
-          //if (current_build_number == 0) {
-            //sh "rm -r ${tomcat_home}/webapps/${artifactFileName} ${tomcat_home}/webapps/${artifactFileNameMinusExt}"
-          //}
-          //else {
-            //sh "rm -r ${tomcat_home}/webapps/${OldArtifactFileName} ${tomcat_home}/webapps/${OldArtifactFileNameMinusExt}"
-          //}
+          if (current_build_number == 0) {
+            sh "rm -r ${tomcat_home}/webapps/${artifactFileName} ${tomcat_home}/webapps/${artifactFileNameMinusExt}"
+          }
+          else {
+            sh "rm -r ${tomcat_home}/webapps/${OldArtifactFileName} ${tomcat_home}/webapps/${OldArtifactFileNameMinusExt}"
+          }
           // copy the new artifacts to webapps directory
            sh "cp ${wsDirPath}/target/${NewArtifactFileName} ${tomcat_home}/webapps"
            echo "listing tomcat webapps directory"
