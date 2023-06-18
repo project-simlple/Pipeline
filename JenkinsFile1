@@ -53,7 +53,7 @@ node('dev') {
           // rename 
           sh "mv ${wsDirPath}/target/${artifactFileName} ${wsDirPath}/target/${NewArtifactFileName}"
           // copy the artifacts to backup directory
-          sh "cp ${wsDirPath}/target/NewArtifactFileName ${artifact_backup_dir}"
+          sh "cp ${wsDirPath}/target/${NewArtifactFileName} ${artifact_backup_dir}"
           // cleaning the older artifacts from webapps directory
           //if (current_build_number == 0) {
             //sh "rm -r ${tomcat_home}/webapps/${artifactFileName} ${tomcat_home}/webapps/${artifactFileNameMinusExt}"
