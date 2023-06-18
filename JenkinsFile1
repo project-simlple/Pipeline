@@ -45,7 +45,7 @@ node('dev') {
           println artifactFileName
           artifactFileName = artifactFileName.trim()
           println artifactFileName
-          def artifactFileNameMinusExt = artifcatFileName.minus(".war")
+          def artifactFileNameMinusExt = artifactFileName.minus(".war")
           println artifactFileNameMinusExt
           // new file names of  the artifacts according to current build number 
           def NewArtifactFileNameMinusExt = artifactFileNameMinusExt+"_"+current_build_number.toString()
