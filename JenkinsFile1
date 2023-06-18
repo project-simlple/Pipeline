@@ -36,8 +36,8 @@ node('dev') {
       sh "ls -alh ${wsDirPath}/target"
       def artifactFileName = sh(script: "ls ${wsDirPath}/target|grep .war",
                                 returnStdout: true
-                                )
-      println "hi"+artifactFileName+"hi"
+                                ) 
+      println "hi"+artifactFileName.reverse().stripIndent().reverse()+"hi"
       println artifactFileName.length()
       sh "cp ${wsDirPath}/target/${artifactFileName}  ${tomcat_webapps_dir}"
     }
