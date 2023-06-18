@@ -1,16 +1,19 @@
 node('dev') {
   // Working enviornment specific variables
   def wsDirPath = this.env.getProperty('WORKSPACE')
+  // Build specific variables
+  def current_build_number = this.currentBuild.getNumber()
   // Tools specific variables
   def maven_home = tool(name:"Maven")
   def tomcat_home = "/opt/tomcat"
+  def artifact_backup_dir = "/opt/jenkins_backup/practice1"
   
   try {
     stage("dummy: gathering info") {
       echo "User details: "
       sh "id"
       echo "Build number: "
-      echo "${this.currentBuild.getNumber()}"
+      echo "${current_build_number}"
       echo "Name of the node: "
       echo "${this.env.getProperty('NODE_NAME')}"
       echo "Workspace directory path :"
@@ -31,20 +34,42 @@ node('dev') {
       sh "cd ${wsDirPath}"
       sh "${maven_home}/bin/mvn package"
     }
-    stage("copy the .war file to tomcat webapps directory for deployment and clean the build artificats from workspace") {
-      echo "listing target directory"
-      sh "ls -alh ${wsDirPath}/target"
-      def artifactFileName = sh(script: "ls ${wsDirPath}/target|grep .war",
-                                returnStdout: true
-                                ).trim() 
-      sh "cp ${wsDirPath}/target/${artifactFileName}  ${tomcat_home}/webapps"
+    stage("clean the older artifacts from webapps directory and copy the newer artifacts) {
+          // if newer version of artifacts had been successfully created then clean the webapps directory
+          // from older version of artifacts and copy the new
+          echo "listing target directory"
+          sh "ls -alh ${wsDirPath}/target"
+          def artifactFileName = sh(script: "ls ${wsDirPath}/target|grep .war",
+                                    returnStdout: true
+                                    ).trim()
+          def artifactFileNameMinusExt = artifcatFileName.minus(".war")
+          // new file names of  the artifacts according to current build number 
+          def NewArtifactFileNameMinusExt = artifactFileNameMinusExt+"_"+current_build_number.toString()
+          def NewArtifactFileName = NewArtifactFileNameMinusExt+".war"
+          // new file names of the artifacts according to prev build number
+          def OldArtifactFileNameMinusExt = artifactFileNameMinusExt+"_"+(current_build_number-1).toString()
+          def OldArtifactFileName = NewArtifactFileNameMinusExt+".war"
+          // rename 
+          sh "mv ${wsDirPath}/target/artifactFileName ${wsDirPath}/target/NewArtifactFileName"
+          // copy the artifacts to backup directory
+          sh "cp ${wsDirPath}/target/NewArtifactFileName ${artifact_backup_dir}"
+          // cleaning the older artifacts from webapps directory
+//           if (current_build_number == 0) {
+//             sh "rm -r ${tomcat_home}/webapps/${artifcatFileName} ${tomcat_home}/webapps/${artifactFileNameMinusExt}"
+//           }
+//           else {
+//             sh "rm -r ${tomcat_home}/webapps/${OldArtifactFileName} ${tomcat_home}/webapps/${OldArtifactFileNameMinusExt}"
+//           }
+          // copy the new artifacts to webapps directory
+           sh "cp ${wsDirPath}/target/NewArtifactFileName ${tomcat_home}/webapps"
     }
-    
-    cleanWs(cleanWhenSuccess: true,
+    stage("cleaning the workspace") {
+      cleanWs(cleanWhenSuccess: true,
             cleanWhenAborted: false,
             cleanWhenFailure: false,
             cleanWhenNotBuilt: false
             )  
+    }
     
   } catch(Exception e) {
     println e
