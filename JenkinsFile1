@@ -66,7 +66,7 @@ node('dev') {
             //sh "rm -r ${tomcat_home}/webapps/${OldArtifactFileName} ${tomcat_home}/webapps/${OldArtifactFileNameMinusExt}"
           //}
           // copy the new artifacts to webapps directory
-           sh "cp ${wsDirPath}/target/NewArtifactFileName ${tomcat_home}/webapps"
+           sh "cp ${wsDirPath}/target/${NewArtifactFileName} ${tomcat_home}/webapps"
            echo "listing tomcat webapps directory"
            sh "ls -alh ${tomcat_home}/webapps"
     }
