@@ -34,7 +34,7 @@ node('dev') {
       sh "cd ${wsDirPath}"
       sh "${maven_home}/bin/mvn package"
     }
-    stage("clean the older artifacts from webapps directory and copy the newer artifacts) {
+    stage("clean the older artifacts from webapps directory and copy the newer artifacts") {
           // if newer version of artifacts had been successfully created then clean the webapps directory
           // from older version of artifacts and copy the new
           echo "listing target directory"
@@ -54,12 +54,12 @@ node('dev') {
           // copy the artifacts to backup directory
           sh "cp ${wsDirPath}/target/NewArtifactFileName ${artifact_backup_dir}"
           // cleaning the older artifacts from webapps directory
-//           if (current_build_number == 0) {
-//             sh "rm -r ${tomcat_home}/webapps/${artifcatFileName} ${tomcat_home}/webapps/${artifactFileNameMinusExt}"
-//           }
-//           else {
-//             sh "rm -r ${tomcat_home}/webapps/${OldArtifactFileName} ${tomcat_home}/webapps/${OldArtifactFileNameMinusExt}"
-//           }
+          //if (current_build_number == 0) {
+            //sh "rm -r ${tomcat_home}/webapps/${artifcatFileName} ${tomcat_home}/webapps/${artifactFileNameMinusExt}"
+          //}
+          //else {
+            //sh "rm -r ${tomcat_home}/webapps/${OldArtifactFileName} ${tomcat_home}/webapps/${OldArtifactFileNameMinusExt}"
+          //}
           // copy the new artifacts to webapps directory
            sh "cp ${wsDirPath}/target/NewArtifactFileName ${tomcat_home}/webapps"
     }
