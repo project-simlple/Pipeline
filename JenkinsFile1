@@ -42,7 +42,9 @@ node('dev') {
           def artifactFileName = sh(script: "ls ${wsDirPath}/target|grep .war",
                                     returnStdout: true
                                     )
+          println artifactFileName
           artifactFileName = artifactFileName.trim()
+          println artifactFileName
           def artifactFileNameMinusExt = artifcatFileName.minus(".war")
           // new file names of  the artifacts according to current build number 
           def NewArtifactFileNameMinusExt = artifactFileNameMinusExt+"_"+current_build_number.toString()
