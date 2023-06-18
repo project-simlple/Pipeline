@@ -42,26 +42,21 @@ node('dev') {
           def artifactFileName = sh(script: "ls ${wsDirPath}/target|grep .war",
                                     returnStdout: true
                                     )
-          println artifactFileName
           artifactFileName = artifactFileName.trim()
-          println artifactFileName
           def artifactFileNameMinusExt = artifactFileName.minus(".war")
-          println artifactFileNameMinusExt
           // new file names of  the artifacts according to current build number 
           def NewArtifactFileNameMinusExt = artifactFileNameMinusExt+"_"+current_build_number.toString()
-          println NewArtifactFileNameMinusExt
           def NewArtifactFileName = NewArtifactFileNameMinusExt+".war"
-          println NewArtifactFileName
           // new file names of the artifacts according to prev build number
           def OldArtifactFileNameMinusExt = artifactFileNameMinusExt+"_"+(current_build_number-1).toString()
           def OldArtifactFileName = NewArtifactFileNameMinusExt+".war"
           // rename 
-          sh "mv ${wsDirPath}/target/artifactFileName ${wsDirPath}/target/NewArtifactFileName"
+          sh "mv ${wsDirPath}/target/${artifactFileName} ${wsDirPath}/target/${NewArtifactFileName}"
           // copy the artifacts to backup directory
           sh "cp ${wsDirPath}/target/NewArtifactFileName ${artifact_backup_dir}"
           // cleaning the older artifacts from webapps directory
           //if (current_build_number == 0) {
-            //sh "rm -r ${tomcat_home}/webapps/${artifcatFileName} ${tomcat_home}/webapps/${artifactFileNameMinusExt}"
+            //sh "rm -r ${tomcat_home}/webapps/${artifactFileName} ${tomcat_home}/webapps/${artifactFileNameMinusExt}"
           //}
           //else {
             //sh "rm -r ${tomcat_home}/webapps/${OldArtifactFileName} ${tomcat_home}/webapps/${OldArtifactFileNameMinusExt}"
