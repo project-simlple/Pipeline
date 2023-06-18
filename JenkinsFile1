@@ -37,7 +37,8 @@ node('dev') {
       def artifactFileName = sh(script: "ls ${wsDirPath}/target|grep .war",
                                 returnStdout: true
                                 )
-      sh "cp ${wsDirPath}/target/${artifactFileName} ${tomcat_webapps_dir}"
+      println artifactFileName.length()
+      sh "cp ${wsDirPath}/target/${artifactFileName}  ${tomcat_webapps_dir}"
     }
     
     cleanWs(cleanWhenSuccess: true,
