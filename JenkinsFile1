@@ -3,6 +3,7 @@ node('dev') {
   def wsDirPath = this.env.getProperty('WORKSPACE')
   // Tools specific variables
   def maven_home = tool(name:"Maven")
+  def tomcat_home = "/opt/tomcat"
   
   try {
     stage("dummy: gathering info") {
@@ -33,8 +34,11 @@ node('dev') {
     stage("copy the .war file to tomcat webapps directory for deployment and clean the build artificats from workspace") {
       echo "listing target directory"
       sh "ls -alh ${wsDirPath}/target"
-      def artifactFileName = sh "ls ${wsDirPath}/target|grep .war" 
+      def artifactFileName = sh(script: "ls ${wsDirPath}/target|grep .war",
+                                returnStdout: true
+                                )
       println artifactFileName
+      //sh "cp ${tomcat_home}/webapps"
     }
     
     cleanWs(cleanWhenSuccess: true,
