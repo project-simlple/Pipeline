@@ -49,7 +49,7 @@ node('dev') {
           def NewArtifactFileName = NewArtifactFileNameMinusExt+".war"
           // new file names of the artifacts according to prev build number
           def OldArtifactFileNameMinusExt = artifactFileNameMinusExt+"_"+(current_build_number-1).toString()
-          def OldArtifactFileName = NewArtifactFileNameMinusExt+".war"
+          def OldArtifactFileName = OldArtifactFileNameMinusExt+".war"
           // rename 
           sh "mv ${wsDirPath}/target/${artifactFileName} ${wsDirPath}/target/${NewArtifactFileName}"
           echo "listing target directory"
